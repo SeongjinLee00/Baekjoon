@@ -11,9 +11,10 @@ j=n-1
 while i<j:
     if numbers[i]+numbers[j]<x:
         i=i+1
-        continue
     elif numbers[i]+numbers[j]==x:
         count=count+1
-    j=j-1
+        i=i+1
+    elif numbers[i]+numbers[j]>x:
+        j=j-1
 
 print(count)
