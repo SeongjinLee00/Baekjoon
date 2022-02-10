@@ -17,5 +17,4 @@ def lcm(num1,num2):
 
 A,B=map(int,input().split())
 C=gcd(A,B)
-D=gcd(A,C)
-print('1'*D)
+print('1'*C)
