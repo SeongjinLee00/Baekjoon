@@ -1,13 +1,14 @@
-K=int(input())
+import sys
 
-money=[]
+N=int(input())
 
-for _ in range(K):
-    a=int(input())
+stack=[]
 
-    if a==0:
-        money.pop()
-    else:
-        money.append(a)
+for _ in range(N):
+    d=int(sys.stdin.readline())
+    if d!=0:
+        stack.append(d)
+    elif d==0:
+        stack.pop()
 
-print(sum(money))
+print(sum(stack))
