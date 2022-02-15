@@ -18,7 +18,7 @@ while start<=end: # start가 더 커져야 탈출
 if harvest==M:
     print(cut)
 else:
-    for i in range(N+1):
+    for i in range(N):
         harvest=sum([max(x-(cut+i),0) for x in trees])
         if harvest>=M:
             continue
