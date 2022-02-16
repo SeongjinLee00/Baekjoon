@@ -17,7 +17,6 @@ while start<=end:
     elif get<N:
         end=cut-1
 
-
 for k in range(2,-3,-1):
     if sum([length//(cut+k) for length in wires])>=N:
         print(cut+k)
