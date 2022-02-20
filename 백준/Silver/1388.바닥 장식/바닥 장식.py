@@ -11,26 +11,26 @@ for _ in range(N):
 ans=0
 dr=[-1,1]
 dc=[-1,1]
+visited=[[0]*M for _ in range(N)]
 
 def dfs(r,c):
-
     if board[r][c]=='|':
-        board[r][c]='o'
+        visited[r][c]=1
         for i in range(2):
             rr=r+dr[i]
-            if 0<=rr<N and board[rr][c]=='|':
+            if 0<=rr<N and board[rr][c]=='|' and not visited[rr][c]:
                 dfs(rr,c)
 
     if board[r][c]=='-':
-        board[r][c]='o'
+        visited[r][c]=1
         for i in range(2):
             cc=c+dc[i]
-            if 0<=cc<M and board[r][cc]=='-':
+            if 0<=cc<M and board[r][cc]=='-' and not visited[r][cc]:
                 dfs(r,cc)
 
 for i in range(N):
     for j in range(M):
-        if board[i][j]=='|' or board[i][j]=='-':
+        if (board[i][j]=='|' or board[i][j]=='-') and not visited[i][j]:
             dfs(i,j)
             ans+=1
 
