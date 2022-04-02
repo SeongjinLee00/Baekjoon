@@ -8,8 +8,10 @@ def union(x,y):
     parent[findset(y)]=findset(x)
 
 def findset(x):
-    while x!=parent[x]:
-        x=parent[x]
+    tmp = x
+    while x != parent[x]:
+        x = parent[x]
+    parent[tmp] = x
     return x
 
 for _ in range(m):
