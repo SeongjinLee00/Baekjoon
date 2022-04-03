@@ -1,3 +1,5 @@
+import sys
+
 n,m=map(int,input().split())
 
 parent=[i for i in range(n)]
@@ -32,7 +34,7 @@ def find(x):
 #     return x
 
 for turn in range(1,m+1):
-    a,b=map(int,input().split())
+    a,b=map(int,sys.stdin.readline().split())
 
     if find(a)==find(b):
         print(turn)
