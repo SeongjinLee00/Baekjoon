@@ -6,13 +6,30 @@ def union(x,y):
     parent[find(y)]=find(x)
 
 def find(x):
-    tmp = [x]
-    while x != parent[x]:
-        x = parent[x]
-        tmp.append(x)
-    for n in tmp:
-        parent[n] = x
+    while x!=parent[x]:
+        x=parent[x]
     return x
+
+# def find(x):
+#     if parent[x] != x:
+#         parent[x] = find(parent[x])
+#     return parent[x]
+
+# def find(x):
+#     tmp = [x]
+#     while x != parent[x]:
+#         x = parent[x]
+#         tmp.append(x)
+#     for n in tmp:
+#         parent[n] = x
+#     return x
+
+# def find(x):
+#     tmp = x
+#     while x != parent[x]:
+#         x = parent[x]
+#     parent[tmp] = x
+#     return x
 
 for turn in range(1,m+1):
     a,b=map(int,input().split())
