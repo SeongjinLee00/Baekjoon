@@ -1,0 +1,33 @@
+def solution(lines):
+
+    intervals=[]
+    for line in lines:
+        date, time, d=line.split()
+
+        end=int(time[0:2])*3600000+int(time[3:5])*60000+int(time[6:8])*1000+int(time[9:])
+        duration=int(float(d[:-1])*1000)
+        start=end-duration+1
+
+        intervals.append([start,end])
+
+    ans=0
+    for i in intervals:
+        cnt=0
+        s=i[0]
+        e=i[0]+999
+        for j in intervals:
+            if s<=j[0]<=e or s<=j[1]<=e or (s>=j[0] and j[1]>=e):
+                cnt+=1
+            if cnt>ans:
+                ans=cnt
+
+        cnt=0
+        s=i[1]
+        e=i[1]+999
+        for j in intervals:
+            if s<=j[0]<=e or s<=j[1]<=e or (s>=j[0] and j[1]>=e):
+                cnt+=1
+            if cnt>ans:
+                ans=cnt
+
+    return ans
