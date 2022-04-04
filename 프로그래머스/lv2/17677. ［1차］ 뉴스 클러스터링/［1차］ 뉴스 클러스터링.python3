@@ -1,0 +1,47 @@
+def str_to_set(str):
+    strset=[]
+    
+    for i in range(len(str)-1):
+        if 'A'<=str[i]<='Z' and 'A'<=str[i+1]<='Z':
+            strset.append(str[i]+str[i+1])
+
+    return strset
+
+def solution(str1, str2):
+    
+    upper_str1=''
+    upper_str2=''
+
+    for s in str1:
+        if 'a'<=s<='z':
+            upper_str1+=chr(ord(s)-32)
+        else:
+            upper_str1+=s
+    
+    for s in str2:
+        if 'a'<=s<='z':
+            upper_str2+=chr(ord(s)-32)
+        else:
+            upper_str2+=s
+    
+    set1=str_to_set(upper_str1)
+    set2=str_to_set(upper_str2)
+
+    if not set1 and not set2:
+        return 65536
+
+    
+    len_intersection=0
+    a=len(set1)
+    b=len(set2)
+    
+    for ss in set1:
+        if ss in set2:
+            len_intersection+=1
+            set2.remove(ss)
+    
+    len_union=a+b-len_intersection
+
+    return int(len_intersection/len_union*65536)
+
+print(solution('FRANCE','french'))
