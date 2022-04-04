@@ -1,0 +1,55 @@
+def solution(n, t, m, timetable):
+
+    memory=timetable[:]
+    for hour in range(23,-1,-1):
+        for minute in range(59,-1,-1):
+            my_hour=str(hour)
+            my_minute=str(minute)
+
+            if hour<10:
+                my_hour='0'+str(hour)
+            if minute<10:
+                my_minute='0'+str(minute)
+
+            my_time=my_hour+':'+my_minute+'!'
+            
+            timetable=memory[:]
+            timetable.append(my_time)
+            timetable.sort(reverse=True)
+
+            now_time='09:00'
+
+            for _ in range(n):
+                for _ in range(m):
+
+                    if not timetable:
+                        break
+
+                    if timetable[-1][-1]=='!' and timetable[-1][0:5]<=now_time:
+                        return timetable[-1][0:5]
+
+                    if timetable[-1]<=now_time:
+                        timetable.pop()
+                    else:
+                        break
+                
+                now_hour=int(now_time[0:2])
+                now_minute=int(now_time[3:5])+t
+
+                if now_minute>=60:
+                    now_minute-=60
+                    now_hour+=1
+
+                if now_hour<10:
+                    now_hour='0'+str(now_hour)
+                else:
+                    now_hour=str(now_hour)
+
+                if now_minute<10:
+                    now_minute='0'+str(now_minute)
+                else:
+                    now_minute=str(now_minute)
+                    
+                now_time=now_hour+':'+now_minute
+
+print(solution(10, 1, 5 , ["09:00", "09:00", "09:00", "09:00", "09:00"]))
