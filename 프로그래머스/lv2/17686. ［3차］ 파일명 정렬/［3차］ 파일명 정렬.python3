@@ -1,0 +1,26 @@
+def solution(files):
+    arr=[]
+    
+    for f in files:
+        file=f.lower()
+        head=''
+        number=''
+
+        for c in file:
+            if not '0'<=c<='9' and number:
+                break
+            if 'a'<=c<='z' or c==' ' or c=='-' or c=='.':
+                head+=c
+            else:
+                number+=c
+
+        arr.append([head,int(number),f])
+    
+    arr.sort(key=lambda x:(x[0],x[1]))
+    
+    answer=[]
+
+    for item in arr:
+        answer.append(item[2])
+    
+    return answer
