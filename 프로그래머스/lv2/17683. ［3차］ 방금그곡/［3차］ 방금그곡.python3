@@ -1,0 +1,68 @@
+def solution(m_raw, musicinfos):
+    
+    m=[]
+    for note in m_raw:
+        if note=='#':
+            if m[-1]=='C':
+                m[-1]='V'
+            elif m[-1]=='D':
+                m[-1]='W'
+            elif m[-1]=='F':
+                m[-1]='X'
+            elif m[-1]=='G':
+                m[-1]='Y'
+            elif m[-1]=='A':
+                m[-1]='Z'
+        else:
+            m.append(note)
+
+    m_str=''
+
+    for note in m:
+        m_str+=note
+
+    ans=[]
+    maxduration=0
+    for arr in musicinfos:
+        start,end,title,melody_raw=arr.split(',')
+        starthour,startmin=start.split(':')
+        endhour,endmin=end.split(':')
+
+        start=60*int(starthour)+int(startmin)
+        end=60*int(endhour)+int(endmin)
+
+        duration=end-start
+
+        melody=[] # (C# D# F# G# A# -> V W X Y Z)
+
+        for note in melody_raw:
+            if note=='#':
+                if melody[-1]=='C':
+                    melody[-1]='V'
+                elif melody[-1]=='D':
+                    melody[-1]='W'
+                elif melody[-1]=='F':
+                    melody[-1]='X'
+                elif melody[-1]=='G':
+                    melody[-1]='Y'
+                elif melody[-1]=='A':
+                    melody[-1]='Z'
+            else:
+                melody.append(note)
+        
+        played_melody=''
+        i=0
+        l=len(melody)
+        while i<duration:
+            played_melody+=melody[i%l]
+            i+=1
+        if m_str in played_melody:
+            if duration>maxduration:
+                maxduration=duration
+            ans.append([duration,title])
+
+    for music in ans:
+        if music[0]==maxduration:
+            return music[1]
+
+    return "(None)"
