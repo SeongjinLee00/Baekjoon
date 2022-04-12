@@ -1,0 +1,41 @@
+def solution(words):
+    
+    words.sort()
+    ans=0
+
+    for i in range(len(words)):
+        j=0
+        k=0
+        if i==0:
+            try:
+                while words[i][j]==words[i+1][j]:
+                    j+=1
+            except:
+                j-=1
+
+        elif i==len(words)-1:
+            try:
+                while words[i][j]==words[i-1][j]:
+                    j+=1
+            except:
+                pass
+
+        else:
+            try:
+                while words[i][j]==words[i+1][j]:
+                    j+=1
+            except:
+                j-=1
+            try:
+                while words[i][k]==words[i-1][k]:
+                    k+=1
+            except:
+                pass
+            
+        ans+=max(j,k)+1
+    
+    return ans
+
+print(solution(["go","gone","guild"]))
+print(solution(["abc","def","ghi","jklm"]))
+print(solution(["word","war","warrior","world"]))
