@@ -35,7 +35,3 @@ def solution(words):
         ans+=max(j,k)+1
     
     return ans
-
-print(solution(["go","gone","guild"]))
-print(solution(["abc","def","ghi","jklm"]))
-print(solution(["word","war","warrior","world"]))
