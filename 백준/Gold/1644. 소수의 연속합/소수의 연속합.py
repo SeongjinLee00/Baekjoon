@@ -23,7 +23,7 @@ else:
     length=len(primes)
     cnt=0
 
-    while j<length:
+    while j<length+5:
         if partialsum==N:
             try:
                 cnt+=1
