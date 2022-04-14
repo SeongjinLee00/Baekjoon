@@ -15,11 +15,12 @@ for k in range(N-2):
         partialsum=numbers[k]+numbers[i]+numbers[j]
         if partialsum==0:
             if numbers[i]==numbers[j]:
-                ans+=j-i
+                ans+=(j-i+1)*(j-i)//2
+                break
             else:
                 idx=bisect_left(numbers, numbers[j])
                 ans+=j-idx+1
-            i+=1
+                i+=1
         elif partialsum<0:
             i+=1
         elif partialsum>0:
