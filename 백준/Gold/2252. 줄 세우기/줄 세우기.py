@@ -12,22 +12,20 @@ for _ in range(E):
 
     indegree[b]+=1
 
-def topological_sort():
-    result=[]
-    q=deque()
 
-    for i in range(1,V+1):
+result=[]
+q=deque()
+
+for i in range(1,V+1):
+    if indegree[i]==0:
+        q.append(i)
+while q:
+    
+    now=q.popleft()
+    result.append(now)
+    
+    for i in graph[now]:
+        indegree[i]-=1
         if indegree[i]==0:
             q.append(i)
-    while q:
-        
-        now=q.popleft()
-        result.append(now)
-        
-        for i in graph[now]:
-            indegree[i]-=1
-            if indegree[i]==0:
-                q.append(i)
-    print(*result)
-
-topological_sort()
+print(*result)
