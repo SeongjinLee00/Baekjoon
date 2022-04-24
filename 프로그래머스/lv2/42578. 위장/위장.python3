@@ -1,0 +1,20 @@
+from collections import defaultdict
+
+def solution(clothes):
+
+    clothes_dict=defaultdict(list)
+
+    for name, type in clothes:
+        clothes_dict[type].append(name)
+
+    numbers=[]
+
+    for type,names in clothes_dict.items():
+        numbers.append(len(names))
+
+    tmp=1
+
+    for number in numbers:
+        tmp*=(number+1)
+
+    return tmp-1
