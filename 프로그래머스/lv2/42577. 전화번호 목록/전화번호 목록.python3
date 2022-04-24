@@ -1,0 +1,14 @@
+def solution(phone_book):
+    number_set=set()
+
+    phone_book.sort()
+
+    for number in phone_book:
+        s=''
+        for n in number:
+            s+=n
+            if s in number_set:
+                return False
+        number_set.add(s)
+
+    return True
