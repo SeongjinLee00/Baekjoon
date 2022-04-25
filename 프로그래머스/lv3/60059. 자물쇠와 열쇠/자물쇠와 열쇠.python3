@@ -1,0 +1,70 @@
+def check(lock, N):
+    for i in range(N):
+        for j in range(N):
+            if lock[i][j]!=1:
+                return False
+    return True
+
+def rotate(key,M):
+    ret=[[0]*M for _ in range(M)]
+    for r in range(M):
+        for c in range(M):
+            ret[c][M-1-r]=key[r][c]
+    return ret
+
+def solution(key, lock):
+    M=len(key)
+    N=len(lock)
+    memory=[row[:] for row in lock]
+
+    for dr in range(-M+1,N):
+        for dc in range(-M+1,N):
+            lock=[row[:] for row in memory]
+            for i in range(M):
+                for j in range(M):
+                    if 0<=i+dr<N and 0<=j+dc<N:
+                        lock[i+dr][j+dc]+=key[i][j]
+
+            if check(lock,N):
+                return True
+    
+    key=rotate(key,M)
+
+    for dr in range(-M+1,N):
+        for dc in range(-M+1,N):
+            lock=[row[:] for row in memory]
+            for i in range(M):
+                for j in range(M):
+                    if 0<=i+dr<N and 0<=j+dc<N:
+                        lock[i+dr][j+dc]+=key[i][j]
+
+            if check(lock,N):
+                return True
+
+    key=rotate(key,M)
+
+    for dr in range(-M+1,N):
+        for dc in range(-M+1,N):
+            lock=[row[:] for row in memory]
+            for i in range(M):
+                for j in range(M):
+                    if 0<=i+dr<N and 0<=j+dc<N:
+                        lock[i+dr][j+dc]+=key[i][j]
+
+            if check(lock,N):
+                return True
+    
+    key=rotate(key,M)
+
+    for dr in range(-M+1,N):
+        for dc in range(-M+1,N):
+            lock=[row[:] for row in memory]
+            for i in range(M):
+                for j in range(M):
+                    if 0<=i+dr<N and 0<=j+dc<N:
+                        lock[i+dr][j+dc]+=key[i][j]
+
+            if check(lock,N):
+                return True
+
+    return False
