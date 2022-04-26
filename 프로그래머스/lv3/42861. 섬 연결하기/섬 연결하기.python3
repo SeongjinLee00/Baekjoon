@@ -1,0 +1,25 @@
+def solution(n, costs):
+
+    parents=[i for i in range(n)]
+
+    def union(x,y):
+        a=find(x)
+        b=find(y)
+
+        parents[max(a,b)]=min(a,b)
+
+    def find(x):
+        if x!=parents[x]:
+            parents[x]=find(parents[x])
+
+        return parents[x]
+
+    costs.sort(key=lambda x:x[2])
+
+    ans=0
+    for start,end,cost in costs:
+        if find(start)!=find(end):
+            union(start,end)
+            ans+=cost
+
+    return ans
