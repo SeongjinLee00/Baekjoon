@@ -6,10 +6,7 @@ def check(lock, N):
     return True
 
 def rotate(key,M):
-    ret=[[0]*M for _ in range(M)]
-    for r in range(M):
-        for c in range(M):
-            ret[c][M-1-r]=key[r][c]
+    ret=list(zip(*key[::-1]))
     return ret
 
 def solution(key, lock):

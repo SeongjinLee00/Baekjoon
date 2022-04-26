@@ -1,10 +1,10 @@
 # [level 3] 자물쇠와 열쇠 - 60059 
 
-[문제 링크](https://programmers.co.kr/learn/courses/30/lessons/60059#qna) 
+[문제 링크](https://programmers.co.kr/learn/courses/30/lessons/60059) 
 
 ### 성능 요약
 
-메모리: 10.5 MB, 시간: 0.49 ms
+메모리: 10.2 MB, 시간: 0.52 ms
 
 ### 구분
 
