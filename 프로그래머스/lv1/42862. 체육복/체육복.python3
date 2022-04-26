@@ -1,0 +1,18 @@
+def solution(n, lost, reserve):
+
+    lost.sort()
+    reserve.sort()
+    for r in reserve[:]:
+        if r in lost[:]:
+            lost.remove(r)
+            reserve.remove(r)
+            continue
+    for r in reserve[:]:
+        if r-1 in lost[:]:
+            lost.remove(r-1)
+            continue
+        if r+1 in lost[:]:
+            lost.remove(r+1)
+            continue
+    
+    return n-len(lost)
