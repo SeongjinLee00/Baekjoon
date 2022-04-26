@@ -1,0 +1,54 @@
+def solve(p):
+    if is_correct(p):
+        return p
+    if p=='':
+        return ''
+    l=len(p)
+    u=p[0]
+    cnt=1
+
+    for i in range(1,l):
+        u+=p[i]
+        if p[i]==p[0]:
+            cnt+=1
+        else:
+            cnt-=1
+        
+        if cnt==0:
+            v=p[i+1:l]
+            break
+
+    if is_correct(u):
+        return u+solve(v)
+    else:
+        tmp=''
+        tmp+='('
+        tmp+=solve(v)
+        tmp+=')'
+        for p in u[1:len(u)-1]:
+            if p=='(':
+                tmp+=')'
+            elif p==')':
+                tmp+='('
+        return tmp
+
+def is_correct(pp):
+    stack=[]
+    for p in pp:
+        if p=='(':
+            stack.append(p)
+        elif p==')':
+            if stack==[]:
+                return False
+            else:
+                stack.pop()
+    
+    if stack==[]:
+        return True
+
+    return False
+
+def solution(p):
+
+    ans=solve(p)
+    return ans
