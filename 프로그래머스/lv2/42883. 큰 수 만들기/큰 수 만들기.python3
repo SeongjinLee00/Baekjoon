@@ -1,0 +1,30 @@
+from collections import deque
+
+def solution(number, k):
+    new_number=deque()
+
+    cnt=0
+    for n in number:
+
+        if cnt==k:
+            new_number.append(n)
+        else:
+            if not new_number:
+                new_number.append(n)
+                continue
+            if new_number[-1]<n:
+                while new_number[-1]<n:
+                    new_number.pop()
+                    cnt+=1
+
+                    if not new_number:
+                        break
+                    if cnt==k:
+                        break
+            new_number.append(n)
+
+    ans=''
+    for i in range(len(new_number)-(k-cnt)):
+        ans+=new_number[i]
+
+    return ans
