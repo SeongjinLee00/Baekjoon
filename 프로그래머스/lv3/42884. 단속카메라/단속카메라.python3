@@ -1,0 +1,21 @@
+from collections import deque
+
+def solution(routes):
+
+    routes.sort(key=lambda x:x[1])
+    q=deque(routes)
+
+    cnt=0
+
+    while True:
+        camera=q.popleft()[1]
+        cnt+=1
+
+        if not q:
+            return cnt
+            
+        while q[0][0]<=camera<=q[0][1]:
+            q.popleft()
+
+            if not q:
+                return cnt
