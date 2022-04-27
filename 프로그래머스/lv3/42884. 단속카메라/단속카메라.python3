@@ -14,7 +14,7 @@ def solution(routes):
         if not q:
             return cnt
             
-        while q[0][0]<=camera<=q[0][1]:
+        while q[0][0]<=camera:
             q.popleft()
 
             if not q:
