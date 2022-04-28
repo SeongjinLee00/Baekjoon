@@ -1,7 +1,7 @@
 from collections import deque
 
 def solution(number, k):
-    new_number=deque()
+    new_number=[]
 
     cnt=0
     for n in number:
