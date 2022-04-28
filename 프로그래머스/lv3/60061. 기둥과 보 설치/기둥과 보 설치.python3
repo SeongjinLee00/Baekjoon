@@ -1,0 +1,73 @@
+def solution(n, build_frame):
+
+    pillars_list=[]
+    beams_list=[]
+
+    def build_pillar(pillar):
+        x,y,a,b=pillar
+
+        if [x,y-1,0] in pillars_list:
+            pillars_list.append([x,y,0])
+        
+        elif y==0:
+            pillars_list.append([x,y,0])
+
+        elif ([x-1,y,1] in beams_list) or ([x,y,1] in beams_list):
+            pillars_list.append([x,y,0])
+
+    def build_beam(beam):
+        x,y,a,b=beam
+
+        if ([x-1,y,1] in beams_list) and ([x+1,y,1] in beams_list):
+            beams_list.append([x,y,1])
+
+        elif ([x,y-1,0] in pillars_list) or ([x+1,y-1,0] in pillars_list):
+            beams_list.append([x,y,1])
+
+    def remove_pillar(pillar):
+        x,y,a,b=pillar
+
+        if [x,y+1,0] in pillars_list and [x-1,y+1,1] not in beams_list and [x,y+1,1] not in beams_list:
+            return
+        
+        if [x,y+1,1] in beams_list and ([x+1,y,0] not in pillars_list) and not ([x-1,y+1,1] in beams_list and [x+1,y+1,1] in beams_list):
+            return
+
+        if [x-1,y+1,1] in beams_list and ([x-1,y,0] not in pillars_list) and not ([x-2,y+1,1] in beams_list and [x,y+1,1] in beams_list):
+            return
+
+        pillars_list.remove([x,y,0])
+
+    def remove_beam(beam):
+        x,y,a,b=beam
+        
+        if [x,y,0] in pillars_list and ([x,y-1,0] not in pillars_list) and [x-1,y,1] not in beams_list:
+            return
+        
+        if [x+1,y,0] in pillars_list and ([x+1,y-1,0] not in pillars_list) and [x+1,y,1] not in beams_list:
+            return
+
+        if [x-1,y,1] in beams_list and (([x-1,y-1,0] not in pillars_list) and [x,y-1,0] not in pillars_list):
+            return
+        if [x+1,y,1] in beams_list and (([x+1,y-1,0] not in pillars_list) and [x+2,y-1,0] not in pillars_list):
+            return
+
+        beams_list.remove([x,y,1])
+
+
+    for item in build_frame:
+        x,y,a,b=item
+
+        if a==0 and b==0:
+            remove_pillar(item)
+        elif a==0 and b==1:
+            build_pillar(item)
+        elif a==1 and b==0:
+            remove_beam(item)
+        elif a==1 and b==1:
+            build_beam(item)
+
+    ans=beams_list+pillars_list
+    ans.sort()
+
+    return ans
