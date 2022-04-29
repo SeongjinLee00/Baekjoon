@@ -1,0 +1,36 @@
+from itertools import permutations
+
+def solution(n, weak, dist):
+
+    ans=9999999
+    memory=weak[:]
+    lw=len(weak)
+    
+    for friends in list(permutations(dist,len(dist))): # 8!
+        for i in range(lw): # 15
+            weak=memory[:]
+            cnt=0
+            for friend in friends: # 8
+                cnt+=1
+                start=memory[i]
+                indi=0
+                while True:
+                    weak.remove(memory[i])
+                    i+=1
+                    if i==lw:
+                        i=0
+                        indi=1
+                    if not weak:
+                        if cnt<ans:
+                            ans=cnt
+                        break
+                    if memory[i]+indi*n>(start+friend):
+                        break
+                
+                if not weak:
+                    break
+
+    if ans==9999999:
+        return -1
+    else:
+        return ans
