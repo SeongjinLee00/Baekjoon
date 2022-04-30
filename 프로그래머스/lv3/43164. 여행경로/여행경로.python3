@@ -1,0 +1,44 @@
+from collections import defaultdict
+
+def solution(tickets):
+    tickets.sort()
+    t=len(tickets)
+    airports=set()
+    graph=defaultdict(list)
+    standard=defaultdict(int)
+
+    for s,e in tickets:
+        if s not in airports:
+            airports.add(s)
+        if e not in airports:
+            airports.add(e)
+
+        graph[s].append(e)
+        standard[s+e]+=1
+
+    airports=list(airports)
+    airports.sort()
+    flag=0
+    ans=[]
+
+    def dfs(node,route,used):
+        nonlocal flag
+        nonlocal ans
+
+        if flag:
+            return
+        
+        if sum(used.values())==t:
+            flag=1
+            ans=route
+            return
+        
+        for airport in graph[node]:
+            if standard[node+airport]>used[node+airport]:
+                used[node+airport]+=1
+                dfs(airport,route+[airport],used)
+                used[node+airport]-=1
+
+    dfs("ICN",["ICN"],defaultdict(int))
+    if flag:
+        return ans
