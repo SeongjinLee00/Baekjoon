@@ -1,0 +1,19 @@
+def solution(numbers, target):
+    
+    ans=0
+    N=len(numbers)
+    
+    def backtrack(s,i):
+        nonlocal ans
+        
+        if i==N:
+            if s==target:
+                ans+=1
+            return
+
+        backtrack(s+numbers[i],i+1)
+        backtrack(s-numbers[i],i+1)
+
+    backtrack(0,0)
+
+    return ans
