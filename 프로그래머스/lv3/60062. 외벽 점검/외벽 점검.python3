@@ -3,28 +3,31 @@ from itertools import permutations
 def solution(n, weak, dist):
 
     ans=9999999
-    memory=weak[:]
+    weak_bit=0
+    for w in weak:
+        weak_bit|=(1<<w)
+    memory=weak_bit
     lw=len(weak)
     
     for friends in list(permutations(dist,len(dist))): # 8!
         for i in range(lw): # 15
-            weak=memory[:]
+            weak_bit=memory
             cnt=0
-            for friend in friends: # 8
+            for friend in friends:
                 cnt+=1
-                start=memory[i]
+                start=weak[i]
                 indi=0
                 while True:
-                    weak.remove(memory[i])
+                    weak_bit&=~(1<<weak[i])
                     i+=1
                     if i==lw:
                         i=0
                         indi=1
-                    if not weak:
+                    if weak_bit==0:
                         if cnt<ans:
                             ans=cnt
                         break
-                    if memory[i]+indi*n>(start+friend):
+                    if weak[i]+indi*n>(start+friend):
                         break
                 
                 if not weak:
