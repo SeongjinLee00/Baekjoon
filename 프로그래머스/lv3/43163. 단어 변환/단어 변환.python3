@@ -1,0 +1,29 @@
+from collections import deque, defaultdict
+
+def different_one(s1,s2):
+    cnt=0
+    for i in range(len(s1)):
+        if s1[i]!=s2[i]:
+            cnt+=1
+    if cnt==1:
+        return True
+    else:
+        return False
+
+def solution(begin, target, words):
+
+    visited=defaultdict(int)
+    q=deque([[begin,0]])
+    visited[begin]=1
+    
+    while q:
+        word,d=q.popleft()
+        if word==target:
+            return d
+
+        for i in range(len(words)):
+            if different_one(word,words[i]) and not visited[words[i]]:
+                q.append([words[i],d+1])
+                visited[words[i]]=1
+
+    return 0
