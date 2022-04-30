@@ -1,55 +1,49 @@
-from heapq import heappop, heappush
 import sys
+input=sys.stdin.readline
 
-input= sys.stdin.readline
+N=int(input())
+M=int(input())
 
-V=int(input())
-E=int(input())
+costs=[[float('inf')]*N for _ in range(N)]
 
-graph=[[] for _ in range(V+1)]
+for _ in range(M):
+    s,e,cost=map(int,input().split())
 
-for _ in range(E):
-    u,v,w=map(int,input().split())
+    costs[s-1][e-1]=min(costs[s-1][e-1],cost)
 
-    graph[u].append([w,v])
+routes=[[0]*N for _ in range(N)]
 
-def Dijkstra(start):
+for i in range(N):
+    for j in range(N):
+        routes[i][j]=[i+1]
 
-    distances=[float('inf')]*(V+1)
-    path=[[i] for i in range(V+1)]
-    distances[start]=0
-    q=[]
+for k in range(N):
+    costs[k][k]=0
 
-    heappush(q,[0,start])
+for k in range(N):
+    for i in range(N):
+        for j in range(N):
+            if costs[i][k]+costs[k][j]<costs[i][j]:
+                costs[i][j]=costs[i][k]+costs[k][j]
+                routes[i][j]=routes[i][k]+routes[k][j]
 
-    while q:
-        travel, curr=heappop(q)
-
-        if distances[curr]<travel:
+for i in range(N):
+    for j in range(N):
+        if i==j:
             continue
+        routes[i][j]+=[j+1]
+        if costs[i][j]==float('inf'):
+            costs[i][j]=0
 
-        for distance, next in graph[curr]:
-            if distances[next]>travel+distance:
-                distances[next]=travel+distance
-                path[next]=path[curr]+[next]
-                heappush(q,[distances[next],next])
-    for i in range(len(distances)):
-        if distances[i]==float('inf'):
-            distances[i]=0
-    return distances,path
-dd=[]
-pp=[]
-for i in range(1,V+1):
-    d,p=Dijkstra(i)
-    dd.append(d)
-    pp.append(p)
+for row in costs:
+    print(*row)
 
-for row in dd:
-    print(*row[1:])
-
-for row in pp:
-    for i in range(1,V+1):
-        if len(row[i])==1:
+for row in routes:
+    for o in row:
+        if len(o)==1:
             print(0)
             continue
-        print(len(row[i]),*row[i])
+        elif costs[o[0]-1][o[-1]-1]==0:
+            print(0)
+            continue
+        print(len(o),*o)
