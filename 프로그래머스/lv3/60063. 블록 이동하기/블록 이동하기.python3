@@ -1,0 +1,50 @@
+from collections import deque
+from pprint import pprint
+
+def solution(board):
+    N=len(board)
+    visited0=[[0]*N for _ in range(N)]
+    visited1=[[0]*N for _ in range(N)]
+
+    dr=[1,-1,0,0,0,0,0,1,-1,-1,1,0]
+    dc=[0,0,1,-1,1,0,0,0,0,1,-1,-1]
+    confi=[0,0,0,0,1,1,-1,-1,1,1,-1,-1]
+
+    q=deque([[0,0,0,0]])
+    visited0[0][0]=1
+
+    while q:
+        r,c,d,configuration=q.popleft()
+
+        if (r==N-2 and c==N-1 and configuration==1) or (r==N-1 and c==N-2 and configuration==0):
+            return d
+
+        for i in range(11,-1,-1):
+            rr=r+dr[i]
+            cc=c+dc[i]
+            next_configuration=configuration+confi[i]
+            if next_configuration==-1 or next_configuration==2:
+                continue
+
+            if 0<=rr<N and 0<=cc<N and 0<=rr+next_configuration<N and 0<=cc+(1-next_configuration)<N and board[rr][cc]==0 and board[rr+next_configuration][cc+(1-next_configuration)]==0:
+                if 0<=i<4:
+                    if next_configuration==0 and not visited0[rr][cc]:
+                        q.append([rr,cc,d+1,next_configuration])
+                        visited0[rr][cc]=d+1
+                    if next_configuration==1 and not visited1[rr][cc]:
+                        q.append([rr,cc,d+1,next_configuration])
+                        visited1[rr][cc]=d+1
+                if 4<=i<8:
+                    if next_configuration==0 and not visited0[rr][cc] and board[r][c+1]==0 and board[r+1][c+1]==0:
+                        q.append([rr,cc,d+1,next_configuration])
+                        visited0[rr][cc]=d+1
+                    if next_configuration==1 and not visited1[rr][cc] and board[r+1][c]==0 and board[r+1][c+1]==0:
+                        q.append([rr,cc,d+1,next_configuration])
+                        visited1[rr][cc]=d+1
+                if 8<=i<12:
+                    if next_configuration==0 and not visited0[rr][cc] and board[r][c-1]==0 and board[r+1][c-1]==0:
+                        q.append([rr,cc,d+1,next_configuration])
+                        visited0[rr][cc]=d+1
+                    if next_configuration==1 and not visited1[rr][cc] and board[r-1][c]==0 and board[r-1][c+1]==0:
+                        q.append([rr,cc,d+1,next_configuration])
+                        visited1[rr][cc]=d+1
