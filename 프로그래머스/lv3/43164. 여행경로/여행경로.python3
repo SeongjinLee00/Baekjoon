@@ -1,4 +1,5 @@
 from collections import defaultdict
+from copy import deepcopy
 
 def solution(tickets):
     tickets.sort()
@@ -36,7 +37,7 @@ def solution(tickets):
         for airport in graph[node]:
             if standard[node+airport]>used[node+airport]:
                 used[node+airport]+=1
-                dfs(airport,route+[airport],used)
+                dfs(airport,route+[airport],deepcopy(used))
                 used[node+airport]-=1
 
     dfs("ICN",["ICN"],defaultdict(int))
