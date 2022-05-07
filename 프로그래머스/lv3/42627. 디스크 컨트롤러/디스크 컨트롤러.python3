@@ -1,0 +1,30 @@
+from heapq import heappush, heappop, heapify
+from collections import deque
+
+def solution(jobs):
+    jobs.sort()
+    jobs=deque(jobs)
+    time=0
+    ans=0
+    cnt=0
+    N=len(jobs)
+
+    q=[]
+
+    while True:
+        if cnt<N and jobs and jobs[0][0]>time and not q:
+            time=jobs[0][0]
+        while jobs and jobs[0][0]<=time:
+            job=jobs.popleft()
+            heappush(q,[job[1],job[0]])
+
+        job=heappop(q)
+        time+=job[0]
+        ans+=(time-job[1])
+        cnt+=1
+
+        if cnt==N:
+            break
+
+
+    return ans//N
