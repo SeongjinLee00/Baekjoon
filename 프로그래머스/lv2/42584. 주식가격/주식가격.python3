@@ -1,0 +1,13 @@
+def solution(prices):
+    N=len(prices)
+    answer=[-1]*N
+
+    for i in range(N):
+        for j in range(i,N):
+            if prices[j]<prices[i]:
+                answer[i]=j-i
+                break
+        if answer[i]==-1:
+            answer[i]=N-i-1
+
+    return answer
