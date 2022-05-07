@@ -30,11 +30,11 @@ def solution(operations):
     ans=[]
 
     for number in min_heap:
-        if -number in max_heap_set:
+        if -number in max_heap:
             ans.append(number)
 
     for number in max_heap:
-        if -number in min_heap_set:
+        if -number in min_heap:
             ans.append(-number)
     try:
         M=max(ans)
