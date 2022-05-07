@@ -1,0 +1,21 @@
+from collections import deque
+
+def solution(priorities, location):
+    priorities=deque(priorities)
+
+    cnt=1
+    while True:
+        for i in range(1,len(priorities)):
+            if priorities[i]>priorities[0]:
+                priorities.append(priorities.popleft())
+                if location==0:
+                    location=(len(priorities)-1)
+                else:
+                    location-=1
+                break
+        else:
+            if location==0:
+                return cnt
+            priorities.popleft()
+            location-=1
+            cnt+=1
