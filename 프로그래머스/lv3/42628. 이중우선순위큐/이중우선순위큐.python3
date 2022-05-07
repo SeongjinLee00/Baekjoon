@@ -1,0 +1,45 @@
+from heapq import heappop, heappush, heapify
+
+def solution(operations):
+    max_heap=[]
+    min_heap=[]
+
+    for operation in operations:
+        s,num=operation.split()
+        num=int(num)
+
+        if s=='I':
+            heappush(min_heap,num)
+            heappush(max_heap,-num)
+        
+        elif s=='D':
+            if num==1:
+                try:
+                    heappop(max_heap)
+                except:
+                    continue
+            elif num==-1:
+                try:
+                    heappop(min_heap)
+                except:
+                    continue
+
+    max_heap_set=set(max_heap)
+    min_heap_set=set(min_heap)
+
+    ans=[]
+
+    for number in min_heap:
+        if -number in max_heap_set:
+            ans.append(number)
+
+    for number in max_heap:
+        if -number in min_heap_set:
+            ans.append(-number)
+    try:
+        M=max(ans)
+        m=min(ans)
+    except:
+        return [0,0]
+
+    return [M,m]
