@@ -1,0 +1,48 @@
+from collections import deque
+
+dr=[1,-1,0,0]
+dc=[0,0,1,-1]
+
+def solution(places):
+    ans=[]
+
+    def bfs(r,c):
+        visited=[[0]*5 for _ in range(5)]
+        q=deque([[r,c,0]])
+        visited[r][c]=1
+
+        while q:
+            r,c,d=q.popleft()
+            if d==2:
+                return 1
+            for i in range(4):
+                rr=r+dr[i]
+                cc=c+dc[i]
+                if 0<=rr<5 and 0<=cc<5 and not visited[rr][cc]:
+                    if seats[rr][cc]=='P':
+                        return 0
+                    if seats[rr][cc]=='O':
+                        visited[rr][cc]=1
+                        q.append([rr,cc,d+1])
+                    if seats[rr][cc]=='X':
+                        continue
+
+        return 1
+
+    for place in places:
+        seats=[]
+        candidates=[]
+        for row in place:
+            seats.append(list(row))
+
+        for i in range(5):
+            for j in range(5):
+                if seats[i][j]=='P':
+                    candidates.append(bfs(i,j))
+        
+        if candidates and sum(candidates)!=len(candidates):
+            ans.append(0)
+        else:
+            ans.append(1)
+
+    return ans
