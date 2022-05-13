@@ -1,0 +1,29 @@
+from heapq import heappop,heappush
+
+def solution(n, edge):
+    distances=[float('inf')]*(n+1)
+    graph=[[] for _ in range(n+1)]
+
+    for a,b in edge:
+        graph[a].append([1,b])
+        graph[b].append([1,a])
+
+    start=1
+    distances[start]=0
+    q=[]
+
+    heappush(q,[0,start])
+
+    while q:
+        travel, curr = heappop(q)
+
+        if travel>distances[curr]:
+            continue
+        
+        for next_distance, next in graph[curr]:
+            if travel+next_distance<distances[next]:
+                distances[next]=travel+next_distance
+                heappush(q,[travel+next_distance, next])
+
+    distances[0]=-1
+    return distances.count(max(distances))
