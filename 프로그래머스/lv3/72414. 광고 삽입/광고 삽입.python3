@@ -1,0 +1,56 @@
+def str_to_sec(str):
+    h,m,s=map(int,str.split(":"))
+
+    return h*3600+m*60+s
+
+def sec_to_str(sec):
+    h=sec//3600
+    sec%=3600
+    m=sec//60
+    sec%=60
+
+    return str(h).zfill(2)+":"+str(m).zfill(2)+":"+str(sec).zfill(2)
+
+def solution(play_time, adv_time, logs):
+    play_time=str_to_sec(play_time)
+    adv_time=str_to_sec(adv_time)
+
+    delta=[0]*360001
+
+    for log in logs:
+        s,e=log.split("-")
+        s=str_to_sec(s)
+        e=str_to_sec(e)
+
+        delta[s]+=1
+        delta[e]-=1
+
+    for i in range(1,len(delta)):
+        delta[i]+=delta[i-1]
+
+    ans=0
+    ans_time=0
+    i=360000-adv_time
+    j=360000
+
+    partial_sum=sum(delta[i:j])
+
+    if partial_sum>=ans:
+        ans=partial_sum
+
+    while True:
+
+        i-=1
+        j-=1
+
+        partial_sum+=delta[i]
+        partial_sum-=delta[j]
+
+        if partial_sum>=ans:
+            ans=partial_sum
+            ans_time=i
+
+        if i==0:
+            break
+    
+    return sec_to_str(ans_time)
