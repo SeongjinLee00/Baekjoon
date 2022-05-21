@@ -15,7 +15,7 @@ def solution(play_time, adv_time, logs):
     play_time=str_to_sec(play_time)
     adv_time=str_to_sec(adv_time)
 
-    delta=[0]*360001
+    delta=[0]*360000
 
     for log in logs:
         s,e=log.split("-")
