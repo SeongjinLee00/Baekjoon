@@ -1,43 +1,107 @@
-from itertools import permutations
 from collections import deque
+from itertools import permutations, product
 
-def ctrl(board, x0, y0, dx, dy):
-    for i in range(1, 4):
-        if 0 <= (x1 := x0 + dx * i) < 4 and 0 <= (y1 := y0 + dy * i) < 4:
-            if board[x1][y1] > 0:
-                return (x1, y1)
-            l = i
-    return (x0 + dx * l, y0 + dy * l)
-
-def move(board, xy0, xy1):
-    dist = [[6] * 4 for _ in range(4)]
-    q = deque([(xy0, 0)])
-    while q:
-        [x, y], d = q.popleft()
-        if d < dist[x][y]:
-            dist[x][y] = d
-            for dx, dy in [(+1, 0), (-1, 0), (0, +1), (0, -1)]:
-                if 0 <= x + dx < 4 and 0 <= y + dy < 4:
-                    q.append(((x + dx, y + dy), d + 1))
-                    q.append((ctrl(board, x, y, dx, dy), d + 1))
-    return dist[xy1[0]][xy1[1]]
+dr=[1,-1,0,0]
+dc=[0,0,1,-1]
 
 def solution(board, r, c):
-    loc = {k: [] for k in range(1, 7)}
+    answer=9999999
+    cards=[[] for _ in range(7)]
+    candidate=[]
+    memory=[[0]*4 for _ in range(4)]
     for i in range(4):
         for j in range(4):
-            if board[i][j]:
-                loc[board[i][j]].append((i, j))
-    minv = 100
-    for p in permutations(filter(lambda v: v, loc.values())):
-        sumv = 0
-        xys = [(r, c)]
-        stage = [[v for v in w] for w in board]
-        for xy1, xy2 in p:
-            vs = [(move(stage, xy, xy1) + move(stage, xy1, xy2), xy2) for xy in xys]\
-               + [(move(stage, xy, xy2) + move(stage, xy2, xy1), xy1) for xy in xys]
-            stage[xy1[0]][xy1[1]] = stage[xy2[0]][xy2[1]] = 0
-            sumv += 2 + (mvn := min(vs)[0])
-            xys = [xy for m, xy in vs if m == mvn]
-        minv = min(sumv, minv)
-    return minv
+            memory[i][j]=board[i][j]
+    for i in range(4):
+        for j in range(4):
+            if board[i][j]!=0:
+                cards[board[i][j]].append([i,j])
+                if board[i][j] not in candidate:
+                    candidate.append(board[i][j])
+
+    candidate.sort()
+    repeat=len(candidate)
+
+    def get_min_move(start,end):
+        r=start[0]
+        c=start[1]
+
+        visited=[[0]*4 for _ in range(4)]
+
+        q=deque([[r,c,0]])
+        visited[r][c]=1
+
+        while q:
+            r,c,d=q.popleft()
+            if [r,c]==end:
+                return d
+            for i in range(4):
+                rr=r+dr[i]
+                cc=c+dc[i]
+                if 0<=rr<4 and 0<=cc<4 and not visited[rr][cc]:
+                    q.append([rr,cc,d+1])
+                    visited[rr][cc]=1
+            if r==0 and not board[r+1][c] and board[r+2][c] and not visited[r+2][c]:
+                q.append([r+2,c,d+1])
+                visited[r+2][c]=1
+            if r==0 and not board[r+1][c] and not board[r+2][c] and not visited[r+3][c]:
+                q.append([r+3,c,d+1])
+                visited[r+3][c]=1
+            if r==1 and not board[r+1][c] and not visited[r+2][c]:
+                q.append([r+2,c,d+1])
+                visited[r+2][c]=1
+
+            if c==0 and not board[r][c+1] and board[r][c+2] and not visited[r][c+2]:
+                q.append([r,c+2,d+1])
+                visited[r][c+2]=1
+            if c==0 and not board[r][c+1] and not board[r][c+2] and not visited[r][c+3]:
+                q.append([r,c+3,d+1])
+                visited[r][c+3]=1
+            if c==1 and not board[r][c+1] and not visited[r][c+2]:
+                q.append([r,c+2,d+1])
+                visited[r][c+2]=1
+
+            if r==3 and not board[r-1][c] and board[r-2][c] and not visited[r-2][c]:
+                q.append([r-2,c,d+1])
+                visited[r-2][c]=1
+            if r==3 and not board[r-1][c] and not board[r-2][c] and not visited[r-3][c]:
+                q.append([r-3,c,d+1])
+                visited[r-3][c]=1
+            if r==2 and not board[r-1][c] and not visited[r-2][c]:
+                q.append([r-2,c,d+1])
+                visited[r-2][c]=1
+
+            if c==3 and not board[r][c-1] and board[r][c-2] and not visited[r][c-2]:
+                q.append([r,c-2,d+1])
+                visited[r][c-2]=1
+            if c==3 and not board[r][c-1] and not board[r][c-2] and not visited[r][c-3]:
+                q.append([r,c-3,d+1])
+                visited[r][c-3]=1
+            if c==2 and not board[r][c-1] and not visited[r][c-2]:
+                q.append([r,c-2,d+1])
+                visited[r][c-2]=1
+
+    for order in permutations(candidate,repeat):
+        visitlist=[]
+        for o in order:
+            visitlist.extend(cards[o])
+        for p in product([0,1],repeat=repeat):
+            visitlist2=[[r,c]]+[[] for _ in range(2*repeat)]
+            tmp=0
+            for i in range(repeat):
+                if p[i]:
+                    visitlist2[2*i+1],visitlist2[2*i+2]=visitlist[2*i+1],visitlist[2*i]
+                else:
+                    visitlist2[2*i+1],visitlist2[2*i+2]=visitlist[2*i],visitlist[2*i+1]
+            for j in range(2*repeat):
+                tmp+=get_min_move(visitlist2[j],visitlist2[j+1])
+                board[visitlist2[j+1][0]][visitlist2[j+1][1]]=0
+
+            if tmp<answer:
+                answer=tmp
+
+            for i in range(4):
+                for j in range(4):
+                    board[i][j]=memory[i][j]
+
+    return answer+repeat*2
