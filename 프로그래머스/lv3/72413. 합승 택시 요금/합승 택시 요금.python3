@@ -1,5 +1,5 @@
 def solution(n, s, a, b, fares):
-    costs=[[float('inf')]*(n+1) for _ in range(n+1)]
+    costs=[[float('inf')]*(n) for _ in range(n)]
 
     a-=1
     b-=1
@@ -9,7 +9,7 @@ def solution(n, s, a, b, fares):
         costs[p1-1][p2-1]=cost
         costs[p2-1][p1-1]=cost
 
-    for k in range(n+1):
+    for k in range(n):
         costs[k][k]=0
 
     for k in range(n):
