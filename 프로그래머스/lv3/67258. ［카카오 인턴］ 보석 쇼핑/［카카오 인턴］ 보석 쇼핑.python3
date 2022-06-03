@@ -1,0 +1,35 @@
+from collections import defaultdict
+
+def solution(gems):
+    gems_set=set(gems)
+
+    my_choice=defaultdict(int)
+
+    left=0
+    right=0
+    my_choice[gems[right]]=1
+    ans=999999999999
+    ans_interval=list()
+    if len(my_choice)==len(gems_set) and right-left<ans:
+        ans=right-left
+        ans_interval=[left+1,right+1]
+
+        
+    while left<=right:
+        if len(my_choice)==len(gems_set):
+            my_choice[gems[left]]-=1
+            if my_choice[gems[left]]==0:
+                my_choice.pop(gems[left])
+            left+=1
+        
+        elif len(my_choice)<len(gems_set):
+            right+=1
+            if right==len(gems):
+                break
+            my_choice[gems[right]]+=1
+
+        if len(my_choice)==len(gems_set) and right-left<ans:
+            ans=right-left
+            ans_interval=[left+1,right+1]
+    
+    return ans_interval
