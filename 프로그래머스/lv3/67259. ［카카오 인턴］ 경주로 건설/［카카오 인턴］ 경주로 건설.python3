@@ -1,0 +1,77 @@
+from collections import deque
+
+dr=[1,-1,0,0]
+dc=[0,0,1,-1]
+
+def solution(board):
+    N=len(board)
+
+    costs0=[[0]*N for _ in range(N)]
+    costs1=[[0]*N for _ in range(N)]
+    costs2=[[0]*N for _ in range(N)]
+    costs3=[[0]*N for _ in range(N)]
+
+    q=deque()
+
+    if not board[0][1]:
+        q.append([0,1,100,2])
+        costs2[0][1]=100
+    if not board[1][0]:
+        q.append([1,0,100,0])
+        costs0[1][0]=100
+
+    while q:
+        r,c,cost,head=q.popleft()
+        for i in range(4):
+            rr=r+dr[i]
+            cc=c+dc[i]
+
+            if 0<=rr<N and 0<=cc<N and board[rr][cc]==1:
+                continue
+
+            if i==0:
+                if i==head:
+                    if 0<=rr<N and 0<=cc<N and (costs0[rr][cc]>cost+100 or costs0[rr][cc]==0):
+                        costs0[rr][cc]=cost+100
+                        q.append([rr,cc,cost+100,i])
+                else:
+                    if 0<=rr<N and 0<=cc<N and (costs0[rr][cc]>cost+600 or costs0[rr][cc]==0):
+                        costs0[rr][cc]=cost+600
+                        q.append([rr,cc,cost+600,i])
+
+            if i==1:
+                if i==head:
+                    if 0<=rr<N and 0<=cc<N and (costs1[rr][cc]>cost+100 or costs1[rr][cc]==0):
+                        costs1[rr][cc]=cost+100
+                        q.append([rr,cc,cost+100,i])
+                else:
+                    if 0<=rr<N and 0<=cc<N and (costs1[rr][cc]>cost+600 or costs1[rr][cc]==0):
+                        costs1[rr][cc]=cost+600
+                        q.append([rr,cc,cost+600,i])
+
+            if i==2:
+                if i==head:
+                    if 0<=rr<N and 0<=cc<N and (costs2[rr][cc]>cost+100 or costs2[rr][cc]==0):
+                        costs2[rr][cc]=cost+100
+                        q.append([rr,cc,cost+100,i])
+                else:
+                    if 0<=rr<N and 0<=cc<N and (costs2[rr][cc]>cost+600 or costs2[rr][cc]==0):
+                        costs2[rr][cc]=cost+600
+                        q.append([rr,cc,cost+600,i])
+
+            if i==3:
+                if i==head:
+                    if 0<=rr<N and 0<=cc<N and (costs3[rr][cc]>cost+100 or costs3[rr][cc]==0):
+                        costs3[rr][cc]=cost+100
+                        q.append([rr,cc,cost+100,i])
+                else:
+                    if 0<=rr<N and 0<=cc<N and (costs3[rr][cc]>cost+600 or costs3[rr][cc]==0):
+                        costs3[rr][cc]=cost+600
+                        q.append([rr,cc,cost+600,i])
+
+    ans=999999999
+    for cost in [costs0[N-1][N-1], costs1[N-1][N-1], costs2[N-1][N-1], costs3[N-1][N-1]]:
+        if 0<cost<ans:
+            ans=cost
+
+    return ans
