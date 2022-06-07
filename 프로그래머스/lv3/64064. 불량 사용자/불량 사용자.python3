@@ -1,0 +1,29 @@
+def match(id1, id2):
+    if len(id1)!=len(id2):
+        return False
+
+    for i in range(len(id1)):
+        if id1[i]!=id2[i] and id2[i]!='*':
+            return False
+    else:
+        return True
+
+def solution(user_id, banned_id):
+    answer_set=set()
+    
+    def search(n, bit):
+        if n==len(banned_id):
+            answer_set.add(bit)
+            return
+
+        for i in range(len(user_id)):
+            if match(user_id[i], banned_id[n]) and not bit&(1<<i):
+                bit|=(1<<i)
+
+                search(n+1, bit)
+
+                bit&=~(1<<i)
+
+    search(0, 0)
+    
+    return len(answer_set)
