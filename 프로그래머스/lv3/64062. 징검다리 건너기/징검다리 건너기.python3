@@ -1,0 +1,29 @@
+def solution(stones, k):
+    # T T T T T F F F F F
+    N=len(stones)
+    
+    def check(num):
+        zerocnt=0
+        for i in range(N):
+            if stones[i]<num:
+                zerocnt+=1
+                if zerocnt==k:
+                    return False
+            else:
+                zerocnt=0
+        else:
+            return True
+            
+    start=0
+    end=200000001
+    while start+1<end:
+        mid=(start+end)//2
+        if check(mid):
+            start=mid
+        else:
+            end=mid
+
+    return start
+
+print(solution([2, 4, 5, 3, 2, 1, 4, 2, 5, 1],3))
+print(solution([1,],1))
