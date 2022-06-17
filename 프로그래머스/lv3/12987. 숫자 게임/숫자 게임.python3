@@ -1,0 +1,15 @@
+def solution(A, B):
+    A.sort(reverse=True)
+    B.sort(reverse=True)
+
+    ans=0
+    while True:
+        if B[-1]>A[-1]:
+            A.pop()
+            B.pop()
+            ans+=1
+        else:
+            B.pop()
+
+        if not B:
+            return ans
