@@ -1,0 +1,18 @@
+import math
+
+def solution(n, stations, w):
+    partitions=[]
+    width=1+2*w
+
+    if stations[0]-w-1>0:
+        partitions.append(stations[0]-w-1)
+    for i in range(1,len(stations)):
+        partitions.append(stations[i]-stations[i-1]-w*2-1)
+    if n-stations[-1]-w>0:
+        partitions.append(n-stations[-1]-w)
+    
+    ans=0
+    for partition in partitions:
+        ans+=math.ceil(partition/width)
+
+    return ans
