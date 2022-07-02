@@ -10,7 +10,7 @@ lines=[]
 
 for _ in range(N):
     s,e=map(int,input().split())
-    lines.append([s,e])
+    lines.append((s,e))
 
 lines.sort()
 
