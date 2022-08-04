@@ -67,9 +67,9 @@ while q:
                 if board[Rr][Rc]=='#' or (Br==Rr and Bc==Rc):
                     Rr-=1
                     break
-        if not fail and (Rr,Rc,Br,Bc,0) not in visited:
+        if not fail and (Rr,Rc,Br,Bc) not in visited:
             q.append([Rr,Rc,Br,Bc,d+1,0])
-            visited.add((Rr,Rc,Br,Bc,0))
+            visited.add((Rr,Rc,Br,Bc))
             if success:
                 print(d+1)
                 exit(0)
@@ -113,9 +113,9 @@ while q:
                 if board[Rr][Rc]=='#' or (Br==Rr and Bc==Rc):
                     Rr+=1
                     break
-        if not fail and (Rr,Rc,Br,Bc,1) not in visited:
+        if not fail and (Rr,Rc,Br,Bc) not in visited:
             q.append([Rr,Rc,Br,Bc,d+1,1])
-            visited.add((Rr,Rc,Br,Bc,1))
+            visited.add((Rr,Rc,Br,Bc))
             if success:
                 print(d+1)
                 exit(0)
@@ -159,9 +159,9 @@ while q:
                 if board[Rr][Rc]=='#' or (Br==Rr and Bc==Rc):
                     Rc-=1
                     break
-        if not fail and (Rr,Rc,Br,Bc,2) not in visited:
+        if not fail and (Rr,Rc,Br,Bc) not in visited:
             q.append([Rr,Rc,Br,Bc,d+1,2])
-            visited.add((Rr,Rc,Br,Bc,2))
+            visited.add((Rr,Rc,Br,Bc))
             if success:
                 print(d+1)
                 exit(0)
@@ -206,9 +206,9 @@ while q:
                     Rc+=1
                     break
 
-        if not fail and (Rr,Rc,Br,Bc,3) not in visited:
+        if not fail and (Rr,Rc,Br,Bc) not in visited:
             q.append([Rr,Rc,Br,Bc,d+1,3])
-            visited.add((Rr,Rc,Br,Bc,3))
+            visited.add((Rr,Rc,Br,Bc))
             if success:
                 print(d+1)
                 exit(0)
