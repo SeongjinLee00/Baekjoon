@@ -1,25 +1,23 @@
+from collections import deque
+
 def solution(queue1, queue2):
-    que = queue1 + queue2
-    n = len(queue1)
-    total = sum(que)
-    if total % 2:
-        return -1
-    s = 0
-    e = n - 1
-    ans = 0
-    my_sum = sum(queue1)
-    target = total // 2
-    while s <= e < 2 * n:
-        if my_sum < target:
-            e += 1
-            ans += 1
-            if e == 2 * n:
-                return -1
-            my_sum += que[e]
-        elif my_sum > target:
-            my_sum -= que[s]
-            s += 1
-            ans += 1
+    queue1=deque(queue1)
+    queue2=deque(queue2)
+    s1=sum(queue1)
+    s2=sum(queue2)
+    ans=0
+
+    while True:
+        if ans>50*len(queue1):
+            return -1
+        ans+=1
+        if s1>s2:
+            queue2.append(queue1.popleft())
+            s1-=queue2[-1]
+            s2+=queue2[-1]
+        elif s1<s2:
+            queue1.append(queue2.popleft())
+            s1+=queue1[-1]
+            s2-=queue1[-1]
         else:
-            return ans
-    return -1
+            return ans-1
