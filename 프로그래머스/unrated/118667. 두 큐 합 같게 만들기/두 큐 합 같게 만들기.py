@@ -6,9 +6,11 @@ def solution(queue1, queue2):
     s1=sum(queue1)
     s2=sum(queue2)
     ans=0
+    
+    N=len(queue1)
 
     while True:
-        if ans>4*(len(queue1)+len(queue2)):
+        if ans>3*N:
             return -1
         ans+=1
         if s1>s2:
