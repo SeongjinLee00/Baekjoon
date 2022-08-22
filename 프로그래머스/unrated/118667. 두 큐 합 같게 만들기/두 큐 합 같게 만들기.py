@@ -8,7 +8,7 @@ def solution(queue1, queue2):
     ans=0
 
     while True:
-        if ans>50*len(queue1):
+        if ans>4*(len(queue1)+len(queue2)):
             return -1
         ans+=1
         if s1>s2:
