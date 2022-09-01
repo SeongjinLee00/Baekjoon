@@ -1,0 +1,4 @@
+SELECT a.ANIMAL_ID, a.NAME from ANIMAL_OUTS a
+LEFT JOIN ANIMAL_INS b ON b.ANIMAL_ID = a.ANIMAL_ID
+WHERE b.ANIMAL_ID is null
+order by a.animal_id;
