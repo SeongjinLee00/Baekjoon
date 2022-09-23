@@ -1,6 +1,6 @@
 # [level 3] 카드 짝 맞추기 - 72415 
 
-[문제 링크](https://programmers.co.kr/learn/courses/30/lessons/72415) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/72415) 
 
 ### 성능 요약
 
