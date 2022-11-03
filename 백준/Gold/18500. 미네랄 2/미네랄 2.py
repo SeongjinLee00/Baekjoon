@@ -28,7 +28,7 @@ def cluster(r,c):
                 clusters.append([rr,cc])
     
     return False if flag else True, clusters
-from pprint import pprint
+
 def attack(h,d):
     if d==1:
         c=0
