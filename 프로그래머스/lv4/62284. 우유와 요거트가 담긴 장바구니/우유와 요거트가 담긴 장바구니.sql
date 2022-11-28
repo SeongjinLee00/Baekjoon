@@ -1,6 +1,7 @@
 -- 코드를 입력하세요
-SELECT a.cart_id from cart_products a
-inner join (select cart_id from cart_products where name='Yogurt') b
-on a.cart_id=b.cart_id
-where a.name='Milk'
-order by a.cart_id ASC
+SELECT CART_ID
+FROM CART_PRODUCTS
+WHERE NAME IN ('Milk', 'Yogurt')
+GROUP BY CART_ID
+HAVING COUNT(DISTINCT(NAME)) >= 2
+ORDER BY CART_ID
